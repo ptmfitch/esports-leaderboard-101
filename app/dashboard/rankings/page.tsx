@@ -36,7 +36,7 @@ export default function RankingsPage() {
         <table className="table">
           <thead>
             <tr>
-              <th></th>
+              <th className="w-20 text-center"></th>
               <th>Agent</th>
               <th>Harness</th>
               <th>Surfaces</th>
@@ -54,7 +54,7 @@ export default function RankingsPage() {
                   <th
                     className={`${
                       rankSize[i] ?? "text-base"
-                    } font-thin opacity-70 tabular-nums`}
+                    } w-20 text-center align-middle font-thin leading-none opacity-70 tabular-nums`}
                   >
                     {i + 1}
                   </th>
