@@ -38,3 +38,38 @@
   --color-error: #ff3b5c;
   --color-error-content: #0d0d0d;
 }
+
+/* Aerosol HUD (design-languages/aerosol-hud/DESIGN.md). Scoped to an opt-in
+   wrapper so the pure-black, outline-only language cannot leak into the
+   daisyUI-themed rest of the app. */
+.aerosol-hud {
+  --asphalt: #030202;
+
+  --chalk: #dfe1e1;
+  --chalk-74: #bdbebe;
+  --ash: #5c5c5d;
+
+  --spray-pink: #f50c79;
+  --acid-lime: #9bcc07;
+
+  --signal-amber: #f5a300;
+
+  --hairline: #272727;
+  --hairline-dim: #161515;
+
+  --radius: 4px;
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+
+  --size-micro: 10px;
+  --size-label: 12px;
+  --size-body: 16px;
+  --size-heading: 32px;
+
+  --tracking-label: 0.1em;
+  --tracking-micro: 0.18em;
+}

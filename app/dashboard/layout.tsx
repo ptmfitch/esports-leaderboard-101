@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { RefObject, useRef, useState } from "react";
+import ReportIssueButton from "./ReportIssueButton";
 
 const LG_BREAKPOINT = "(min-width: 1024px)";
 
@@ -62,6 +63,9 @@ export default function DashboardLayout({
             <Link href={"/dashboard"} className="btn btn-ghost text-xl">
               Interstellar AI Rap Battles
             </Link>
+          </div>
+          <div className="flex-none">
+            <ReportIssueButton />
           </div>
         </div>
         <div className="flex flex-col items-center justify-center">

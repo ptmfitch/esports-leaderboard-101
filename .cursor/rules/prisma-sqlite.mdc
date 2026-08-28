@@ -1,0 +1,75 @@
+---
+description: Prisma schema and SQLite query conventions (3NF, indexes, client usage)
+globs: prisma/**/*.prisma,prisma/**/*.ts,lib/prisma.ts,app/**/{actions,action}.ts
+alwaysApply: false
+---
+
+# Prisma + SQLite
+
+Datasource is SQLite. Keep models in `prisma/schema.prisma`. Use the singleton in `lib/prisma.ts`. Field names stay snake_case to match the existing schema.
+
+## Third normal form
+
+- Atomic columns only (no comma-separated lists; use a relation table).
+- Every non-key column depends on the **whole** primary key, not a subset (especially on `Match`, whose PK is `@@id([round, match, game_id])`).
+- No transitive facts: do not copy `Game.name`, player names, or derived rank/score onto another model. Compute rank from matches/ratings at query time unless you need a historical snapshot.
+- Encode domain codes (`winner`: 1 / 0 / -1) as integers; do not duplicate the winning player's attributes.
+
+```prisma
+// ❌ BAD — denormalized copy of Game / Player
+model Match {
+  game_name   String
+  white_name  String
+  standing    Int
+}
+
+// ✅ GOOD — FKs only; names/rank come from relations or queries
+model Match {
+  game    Game    @relation(fields: [game_id], references: [id], onDelete: Cascade)
+  game_id Int
+  white   Player? @relation(fields: [player1], references: [id], name: "whiteG")
+  player1 Int?
+}
+```
+
+## Indexes (SQLite)
+
+Prisma does **not** index FK columns. Add `@@index` for every `where`, `orderBy`, and join you rely on. SQLite uses the **leftmost prefix** of a composite index/PK.
+
+`Match` PK is `[round, match, game_id]`. Lookups by `game_id` or `(game_id, round)` do **not** use that PK — add `@@index([game_id, round])`.
+
+Put equality columns first, then the sort column:
+
+```prisma
+// Player lists: where game_id, orderBy attendant desc
+model Player {
+  game_id    Int?
+  attendant  Boolean @default(false)
+  @@index([game_id, attendant])
+}
+
+model Session {
+  user_id Int
+  @@index([user_id])
+}
+
+model Match {
+  @@id([round, match, game_id], name: "id")
+  @@index([game_id, round])
+  @@index([player1])
+  @@index([player2])
+}
+```
+
+`LIKE 'prefix%'` can use an index; `LIKE '%foo'` cannot. Prefer Prisma `startsWith` over leading-wildcard `LIKE`.
+
+Do not index columns that are never filtered or sorted.
+
+## Queries and migrations
+
+- `select` / `include` only fields the UI needs.
+- Multi-step writes (pair / unpair) stay in `prisma.$transaction`.
+- `$queryRaw` only as a tagged template (parameterized). Never string-concatenate SQL.
+- After schema edits: `npx prisma migrate dev` (do not hand-edit SQLite). Expect table rebuilds — SQLite `ALTER TABLE` is limited.
+- No Postgres-only types (native enums, arrays, `Json` as a document store). Booleans and `DateTime` are fine; Prisma maps them.
+- Do not create a new `PrismaClient()` per request.
