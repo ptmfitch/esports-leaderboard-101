@@ -1,0 +1,10 @@
+{
+  "name": "Fix-Swiss (esports-leaderboard-101)",
+  "install": "bash .cursor/skills/dev-startup/scripts/ensure-dev.sh",
+  "terminals": [
+    {
+      "name": "next-dev",
+      "command": "npm run dev"
+    }
+  ]
+}
