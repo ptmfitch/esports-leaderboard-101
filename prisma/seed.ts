@@ -3,7 +3,7 @@ import { createHmac } from "crypto";
 const prisma = new PrismaClient();
 
 const admin = "admin";
-const password = "pass123"; //you can change password here
+const password = "admin"; //you can change password here
 
 async function main() {
   await prisma.user.create({
