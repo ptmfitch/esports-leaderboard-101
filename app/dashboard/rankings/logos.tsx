@@ -1,7 +1,9 @@
 import { ReactElement } from "react";
 import { AgentLogoId } from "./entrants";
 
-const iconClass = "h-5 w-5 shrink-0 text-white";
+// Sized to the 16px contender label so a glyph never makes a standings row
+// taller than the leader row, which earns its height from the larger rank.
+const iconClass = "h-4 w-4 shrink-0 text-current";
 
 function ClaudeCodeLogo() {
   return (
