@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { RefObject, useRef } from "react";
+import ReportIssueButton from "./ReportIssueButton";
 
 export default function DashboardLayout({
   children,
@@ -49,6 +50,9 @@ export default function DashboardLayout({
               <Link href={"/dashboard"} className="btn btn-ghost text-xl">
                 Interstellar AI Rap Battles
               </Link>
+            </div>
+            <div className="flex-none">
+              <ReportIssueButton />
             </div>
           </div>
           <div className="flex flex-col items-center justify-center">
