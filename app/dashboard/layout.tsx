@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { RefObject, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import ReportIssueButton from "./ReportIssueButton";
 
 const LG_BREAKPOINT = "(min-width: 1024px)";
@@ -13,11 +13,27 @@ export default function DashboardLayout({
   const drawerToggle: RefObject<HTMLInputElement | null> = useRef(null);
   const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
 
+  useEffect(() => {
+    const media = window.matchMedia(LG_BREAKPOINT);
+    const onChange = () => {
+      // A checked overlay toggle becomes a dimmed drawer as soon as
+      // `lg:drawer-open` no longer applies, so clear it at the desktop breakpoint.
+      if (media.matches && drawerToggle.current) {
+        drawerToggle.current.checked = false;
+      }
+    };
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+
   const toggleSidebar = () => {
     // DaisyUI ignores the drawer checkbox while `lg:drawer-open` is set, so
     // desktop collapse has to drop that class. Mobile still uses the overlay checkbox.
     if (window.matchMedia(LG_BREAKPOINT).matches) {
       setDesktopSidebarOpen((open) => !open);
+      if (drawerToggle.current) {
+        drawerToggle.current.checked = false;
+      }
       return;
     }
     if (drawerToggle.current) {
