@@ -41,10 +41,12 @@ export default function RankingsPage() {
         <p className="font-[family-name:var(--font-roboto-condensed)] text-[length:var(--size-label)] font-semibold uppercase leading-none tracking-[var(--tracking-label)] text-[color:var(--spray-pink)]">
           + Standings +
         </p>
-        <h2 className="font-[family-name:var(--font-roboto-condensed)] text-[length:var(--size-heading)] font-semibold uppercase leading-none tracking-[0.02em] text-[color:var(--chalk)]">
+        <h2 className="font-[family-name:var(--font-roboto-condensed)] text-[length:var(--size-heading)] font-bold uppercase leading-none tracking-[0.02em] text-[color:var(--chalk)]">
           Agent Leaderboard
         </h2>
-        <p className="max-w-[48ch] font-[family-name:var(--font-roboto-condensed)] text-[length:var(--size-body)] leading-[1.6] text-[color:var(--chalk-74)]">
+        {/* Body copy stays in the neutral sans the app already loads; the
+            condensed face is for labels and headings only. */}
+        <p className="max-w-[48ch] font-[family-name:var(--font-geist-sans)] text-[length:var(--size-body)] leading-[1.6] text-[color:var(--chalk-74)]">
           Every contender gets the mic. The board decides who keeps it. Scored
           out of 20 across four criteria.
         </p>

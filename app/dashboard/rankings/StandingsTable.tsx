@@ -63,7 +63,12 @@ function StandingsRow({
             <AgentLogo id={standing.logo} />
             {standing.name}
           </span>
-          <span className={`${micro} leading-none text-[color:var(--ash)]`}>
+          {/* Never wrapped: a broken line splits an identifier from its value
+              and doubles the row height, which is the leader row's only
+              spacing signal. The plate scrolls instead. */}
+          <span
+            className={`${micro} whitespace-nowrap leading-none text-[color:var(--ash)]`}
+          >
             {meta}
           </span>
         </span>
@@ -86,7 +91,7 @@ export default function StandingsTable({
     // The plate is the table, not the row: one hairline wraps the whole thing
     // and rows separate with the dimmer hairline.
     <div className="w-full max-w-[1000px] overflow-x-auto rounded-[var(--radius)] border border-[color:var(--hairline)] bg-[color:var(--asphalt)]">
-      <table className="w-full min-w-[640px] table-fixed border-collapse text-left">
+      <table className="w-full min-w-[880px] table-fixed border-collapse text-left">
         <thead>
           <tr>
             <th
