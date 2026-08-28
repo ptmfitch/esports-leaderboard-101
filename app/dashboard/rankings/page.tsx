@@ -1,4 +1,5 @@
 import { entrants } from "./entrants";
+import AgentLogo from "./logos";
 
 const rankSize = [
   "text-6xl",
@@ -57,7 +58,12 @@ export default function RankingsPage() {
                   >
                     {i + 1}
                   </th>
-                  <th>{e.name}</th>
+                  <th>
+                    <span className="flex items-center gap-2">
+                      <AgentLogo id={e.logo} />
+                      {e.name}
+                    </span>
+                  </th>
                   <th>
                     <Stars score={e.harness} />
                   </th>
