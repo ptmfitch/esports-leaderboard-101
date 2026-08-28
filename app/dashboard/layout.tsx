@@ -47,7 +47,7 @@ export default function DashboardLayout({
             </div>
             <div className="flex-1">
               <Link href={"/dashboard"} className="btn btn-ghost text-xl">
-                Fix Swiss
+                Interstellar AI Rap Battles
               </Link>
             </div>
           </div>
@@ -63,19 +63,7 @@ export default function DashboardLayout({
           ></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             <li>
-              <Link href={"/dashboard/games"}>Games</Link>
-            </li>
-            <li>
-              <Link href={"/dashboard/players"}>Players</Link>
-            </li>
-            <li>
-              <Link href={"/dashboard/matches"}>Matches</Link>
-            </li>
-            <li>
-              <Link href={"/dashboard/results"}>Results</Link>
-            </li>
-            <li>
-              <Link href={"#"}>Users</Link>
+              <Link href={"/dashboard/rankings"}>Agent Leaderboard</Link>
             </li>
             <div className="divider"></div>
             <li>
